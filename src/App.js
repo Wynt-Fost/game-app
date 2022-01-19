@@ -12,27 +12,85 @@ function App() {
   const [userInput, setUserInput] = useState('');
   const [gameSearch, setGameSearch] = useState('');
 
+  // let variableOfGameID = "";
+
+  let gameId = '';
+
   useEffect(() => {
+
     axios({
+
       url: 'https://api.rawg.io/api/games',
-      // url: 'https://api.rawg.io/api/games/{id}',
       method: "GET",
       dataResponse: 'json',
       params: {
         key: apiKey,
         search: gameSearch,
         // search: 'escape from tarkov',
-        // id: 654,
+        // id:id,
         page_size: 1
         // q: searchTerm
       }
     }).then((response) => {
-      console.log(response.data.results)
+      console.log(response.data.results[0].id);
+      response.data.results[0].id = gameId
+      console.log(gameId)
 
-      setGame(response.data.results)
+
+
+      // response.data.results.id = id
+      //  console.log(response.data.results)
+      // setGame(response.data.results)
 
     })
+
+    axios({
+
+      // id: gameId,
+      // url: 'https://api.rawg.io/api/games/',
+      url: 'https://api.rawg.io/api/games/' + gameId,
+      method: "GET",
+      dataResponse: 'json',
+      params: {
+        key: apiKey,
+        // search: gameSearch,
+        // search: 'escape from tarkov',
+        // id: gameId,
+        // page_size: 1
+        // q: searchTerm
+      }
+    }).then((response) => {
+      console.log(response);
+    }).catch((error) => {
+      // could throw up an alert() below could redirect to a different component
+      // alert("There was an error returning your data")
+      console.log(error)
+    })
+
   }, [gameSearch]);
+
+  //   axios({
+
+  //     //id: '4348',
+  //     // url: 'https://api.rawg.io/api/games/',
+  //     url: 'https://api.rawg.io/api/games/' + gameId,
+  //     method: "GET",
+  //     dataResponse: 'json',
+  //     params: {
+  //       key: apiKey,
+  //       // search: gameSearch,
+  //       // search: 'escape from tarkov',
+  //       // id:id,
+  //       // page_size: 1
+  //       // q: searchTerm
+  //     }
+  //   }).then((response) => {
+  //     console.log(response);
+  //     //  console.log(response.data.results)
+  //     // setGame(response.data.results)
+
+  //   })
+  // }, [gameSearch]);
 
   const takeInput = (event) => {
     // console.log('is this working?', event.target.value)
@@ -44,7 +102,8 @@ function App() {
   const userSubmit = (event) => {
     event.preventDefault();
 
-    setGameSearch('', userInput);
+    setGameSearch(userInput);
+    console.log('click')
 
   }
 
@@ -70,6 +129,7 @@ function App() {
             <h2>{gameInfo.name}</h2>
             <p className='metaScore' >{gameInfo.metacritic}</p>
             <div className='pictureGallery'>
+
               <img className='screenShot' src={gameInfo.short_screenshots[0].image} alt="" />
               <img className='screenShot' src={gameInfo.short_screenshots[1].image} alt="" />
               <img className='screenShot' src={gameInfo.short_screenshots[2].image} alt="" />
@@ -79,6 +139,8 @@ function App() {
           </div>
 
         )
+
+
       })}
 
 

@@ -62,6 +62,12 @@ img{
 }
 
 
+.gameDiv{
+  width:95%;
+  height: 500px;
+  background-color: aqua;
+}
+
 .pictureGallery{
   display: flex;
 }
@@ -72,5 +78,9 @@ img{
 }
 
 .metaScore{
-  
+  position: relative;
+  left: 5%;
+  width: 1%;
+  height: 50px;
+  background-color: white;
 }
