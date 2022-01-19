@@ -1,7 +1,7 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import displayGame from './components/displayGame.js'
+
 
 
 function App() {
@@ -20,9 +20,9 @@ function App() {
       dataResponse: 'json',
       params: {
         key: apiKey,
-        // search: gameSearch,
-        search: 'escape from tarkov',
-        // id: 52106,
+        search: gameSearch,
+        // search: 'escape from tarkov',
+        // id: 654,
         page_size: 1
         // q: searchTerm
       }
@@ -43,7 +43,8 @@ function App() {
 
   const userSubmit = (event) => {
     event.preventDefault();
-    setGameSearch(userInput);
+
+    setGameSearch('', userInput);
 
   }
 
@@ -51,25 +52,36 @@ function App() {
 
   return (
     <div >
-      <h1>Choose your game!</h1>
+      <section className='userForm'>
+        <h1>Choose your game!</h1>
 
-      {<form onSubmit={userSubmit}>
-        <label htmlFor="search">Search for your favourite game: </label>
-        <input type="text" id='search' onChange={takeInput} value={userInput} />
-        <button>Search</button>
-      </form>}
+        {<form onSubmit={userSubmit}>
+          <label htmlFor="search">Search for your favourite game: </label>
+          <input type="text" id='search' onChange={takeInput} value={userInput} />
+          <button>Search</button>
+        </form>}
+      </section>
 
-      {/* <displayGame theGame={theGame} /> */}
+
 
       {game.map((gameInfo) => {
         return (
-          <div>
+          <div className='gameDiv'>
             <h2>{gameInfo.name}</h2>
-            <p>{gameInfo.metacritic}</p>
-            <img src={gameInfo.background_image} alt="" />
+            <p className='metaScore' >{gameInfo.metacritic}</p>
+            <div className='pictureGallery'>
+              <img className='screenShot' src={gameInfo.short_screenshots[0].image} alt="" />
+              <img className='screenShot' src={gameInfo.short_screenshots[1].image} alt="" />
+              <img className='screenShot' src={gameInfo.short_screenshots[2].image} alt="" />
+              <img className='screenShot' src={gameInfo.short_screenshots[3].image} alt="" />
+            </div>
+
           </div>
+
         )
       })}
+
+
 
     </div>
   );
