@@ -130,7 +130,8 @@ function App() {
 
           {<form onSubmit={userSubmit}>
             <label htmlFor="search">Search for your favourite game: </label> <br />
-            <input type="text" id='search' onChange={takeInput} value={userInput} /> <br />
+            <label htmlFor="subHeading">Get details back!</label> <br />
+            <input type="text" className='search' placeholder='Game name' onChange={takeInput} value={userInput} /> <br />
             <button   >Search</button>
           </form>}
         </div>
@@ -155,26 +156,33 @@ function App() {
       {game.map((moreGameDetails) => {
         return (
 
-          <div className='gameDiv'>
+          <section key={moreGameDetails} className='gameDiv'>
 
-            <h2>{moreGameInfo.name}</h2>
-            <ol>
-              <li>MetaCritic Rating: {moreGameDetails.metacritic} </li>
-              <li>Genre of game: {moreGameDetails.genres[0].name}</li>
-              <li>MetaCritic Website: {moreGameInfo.metacritic_url}</li>
-              <li>Website: {moreGameInfo.website}</li>
+            <div className='wrapper'>
+              <div className='gameDivInfo' >
+                <h2>{moreGameInfo.name}</h2>
+                <ol>
+                  {/* <li>{moreGameDetails.publishers[0].name}</li> */}
+                  <li><b>MetaCritic Rating:</b>  {moreGameDetails.metacritic} </li>
+                  <li><b> Genre of game:</b> {moreGameDetails.genres[0].name}</li>
+                  <li><b> MetaCritic Website:</b> <a href={moreGameInfo.metacritic_url}>{moreGameInfo.metacritic_url}</a>   </li>
+                  <li> <b>Website:</b> <a href={moreGameInfo.website}> {moreGameInfo.website} </a></li>
+                </ol>
 
-            </ol>
-            <p dangerouslySetInnerHTML={{ __html: moreGameInfo.description }}></p>
-            <p>{moreGameDetails.description_raw}</p>
-            <div className='pictureGallery'>
-              <img className='screenShot' src={moreGameDetails.short_screenshots[1].image} alt="" />
-              <img className='screenShot' src={moreGameDetails.short_screenshots[2].image} alt="" />
-              <img className='screenShot' src={moreGameDetails.short_screenshots[3].image} alt="" />
-              <img className='screenShot' src={moreGameDetails.short_screenshots[4].image} alt="" />
+                <p dangerouslySetInnerHTML={{ __html: moreGameInfo.description }}></p>
+                <p>{moreGameDetails.description_raw}</p>
+                <div className='pictureGallery'>
+                  <img className='screenShot' src={moreGameDetails.short_screenshots[0].image} alt="" />
+                  <img className='screenShot' src={moreGameDetails.short_screenshots[1].image} alt="" />
+                  <img className='screenShot' src={moreGameDetails.short_screenshots[2].image} alt="" />
+                  <img className='screenShot' src={moreGameDetails.short_screenshots[3].image} alt="" />
+                  <img className='screenShot' src={moreGameDetails.short_screenshots[4].image} alt="" />
+                  <img className='screenShot' src={moreGameDetails.short_screenshots[5].image} alt="" />
+                </div>
+
+              </div>
             </div>
-
-          </div>
+          </section>
         )
       })}
 

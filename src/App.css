@@ -19,6 +19,9 @@ img{
   width: 100%;
     height: auto;}
 
+    ol,li{
+      list-style: none;
+    }
 
 .App-logo {
   height: 40vmin;
@@ -55,9 +58,15 @@ img{
   }
 }
 
+.wrapper{
+   width: 90%;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
 
 .formSection{
-  height: 50vh;
+  height: 75vh;
   background-image: url(../src/assets/backGroundOne.jpg);
   background-position: center;
   background-size: cover;
@@ -67,30 +76,37 @@ img{
 
 .userForm{
   position: relative;
-  font-family: 'Bebas Neue', cursive;
+  font-family: 'Bebas Neue', cursive;;
   padding-top: 1px;
   top: 160px;
   left: 30%;
   background-color:white;
   color: black;
-  height: 150px;
-  width: 30%;
+  height: 250px;
+  width: 40%;
   box-shadow: 21px 18px 6px 0px rgba(255,255,255,0.75);
 -webkit-box-shadow: 21px 18px 6px 0px rgba(255,255,255,0.75);
 -moz-box-shadow: 21px 18px 6px 0px rgba(255,255,255,0.75);
 } 
 
+input{
+  height: 30px;
+  width: 50%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 button {
   -webkit-border-radius: 1;
   -moz-border-radius: 1;
   border-radius: 1px;
-  font-family: Arial;
+  font-family: 'Press Start 2P', cursive;
   color: #14ebfa;
   font-size: 20px;
   background: #ffffff;
   padding: 10px 20px 10px 20px;
   border: solid #14ebfa 2px;
-  text-decoration: none;
+  /* text-decoration: none; */
 }
 
 button:hover {
@@ -105,20 +121,45 @@ button:hover {
 }
 
 .gameDiv{
-  width:95%;
-  height: 500px;
-  background-color: aqua;
+  height: 0 auto;
+  background-image: url(../src/assets/backGroundThree.jpg);
+  background-position: center;
+  background-size: cover;
+  text-align: center;
+}
+
+.gameDivInfo{
+  padding-top: 40px;
+  padding-bottom: 40px;
+  color: white ;
+}
+
+h2{
+  font-size: 4rem;
+  font-family: 'Bebas Neue', 'Times New Roman';
+}
+
+li{
+  font-family:  'Lato', sans-serif;      
+  font-size: 1.5rem;                      
+}
+
+p{
+  font-family: 'Lato', sans-serif;
+  font-size: 1.5rem;
 }
 
 
 
 .pictureGallery{
   display: flex;
+  flex-wrap: wrap;
+
 }
 
 .screenShot{
   width: 50%;
-  padding: 0px 5px 0px 5px;
+  padding: 5px 5px 5px 5px;
 }
 
 .metaScore{
