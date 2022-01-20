@@ -2,6 +2,7 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Heading from './components/Heading.js';
+import Footing from './components/Footing.js';
 
 
 
@@ -127,9 +128,9 @@ function App() {
 
 
     <div >
-      <Heading />
-      <section className='formSection'>
 
+      <section className='formSection'>
+        <Heading />
         <div className='userForm'>
           <h1>Choose your game!</h1>
 
@@ -189,6 +190,7 @@ function App() {
                 </div>
 
               </div>
+              <Footing />
             </div>
           </section>
         )
