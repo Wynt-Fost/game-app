@@ -1,6 +1,7 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Heading from './components/Heading.js';
 
 
 
@@ -123,8 +124,12 @@ function App() {
 
 
   return (
+
+
     <div >
+      <Heading />
       <section className='formSection'>
+
         <div className='userForm'>
           <h1>Choose your game!</h1>
 
@@ -172,6 +177,9 @@ function App() {
                 <p dangerouslySetInnerHTML={{ __html: moreGameInfo.description }}></p>
                 <p>{moreGameDetails.description_raw}</p>
                 <div className='pictureGallery'>
+                  {moreGameDetails.short_screenshots.map((pictures) => {
+                    <img className='screenShot' src={pictures.image} alt="" />
+                  })}
                   <img className='screenShot' src={moreGameDetails.short_screenshots[0].image} alt="" />
                   <img className='screenShot' src={moreGameDetails.short_screenshots[1].image} alt="" />
                   <img className='screenShot' src={moreGameDetails.short_screenshots[2].image} alt="" />
