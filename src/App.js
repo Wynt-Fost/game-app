@@ -3,56 +3,24 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Heading from './components/Heading.js';
 import Footing from './components/Footing.js';
-
-
+import DOMPurify from "dompurify";
 
 function App() {
+  // api key
   const apiKey = 'd07f35abd3f241b28dd811332c24aff7';
 
+  // storing first api call data
   const [game, setGame] = useState([]);
+  // storing second api call data
   const [moreGameInfo, setMoreGameInfo] = useState([]);
 
   const [userInput, setUserInput] = useState('');
   const [gameSearch, setGameSearch] = useState('');
 
-  // let variableOfGameID = "";
+  const [arrow, setArrow] = useState(false);
 
-
-  // useEffect(() => {
-
-
-
-  //   // gameId = response.data.results[0].id
-
-
-
-  // }, [gameSearch]);
-
-  //   axios({
-
-  //     //id: '4348',
-  //     // url: 'https://api.rawg.io/api/games/',
-  //     url: 'https://api.rawg.io/api/games/' + gameId,
-  //     method: "GET",
-  //     dataResponse: 'json',
-  //     params: {
-  //       key: apiKey,
-  //       // search: gameSearch,
-  //       // search: 'escape from tarkov',
-  //       // id:id,
-  //       // page_size: 1
-  //       // q: searchTerm
-  //     }
-  //   }).then((response) => {
-  //     console.log(response);
-  //     //  console.log(response.data.results)
-  //     // setGame(response.data.results)
-
-  //   })
-  // }, [gameSearch]);
-
+  // fires api call on user input
   const takeInput = (event) => {
-    // console.log('is this working?', event.target.value)
     setUserInput(event.target.value);
 
   }
@@ -60,8 +28,11 @@ function App() {
   const userSubmit = (event) => {
     event.preventDefault();
 
+    // api call
+    // need to add two calls one to get list of games then the next to get game details
+    // first call is to get the ID of the game which is a key value pair in response of this first call
+    // save the value to a variable and pass it to the second call 
     axios({
-
 
       url: 'https://api.rawg.io/api/games',
       method: "GET",
@@ -69,19 +40,13 @@ function App() {
       params: {
         key: apiKey,
         search: userInput,
-        // search: 'escape from tarkov',
-        // id:id,
         page_size: 1,
       }
     }).then((response) => {
-      // console.log(response.data.results[0].id);
       const firstApiCall = response.data.results
-      console.log(firstApiCall)
       setGame(firstApiCall)
       const gameId = response.data.results[0].id
-
-
-
+      // second call takes the gameId variable at the end of the url and returns the next call with more info from the "get details of the game" url
       axios({
 
         id: gameId,
@@ -90,75 +55,45 @@ function App() {
         dataResponse: 'json',
         params: {
           key: apiKey,
-          // search: gameSearch,
-          // search: 'escape from tarkov',
-          // id: gameId,
-          // q: searchTerm
         }
       }).then((response) => {
-        // setGame.response.data
 
         const secondApiCall = response.data;
         console.log(secondApiCall)
         setMoreGameInfo(secondApiCall)
-        // setGame(moreGameInfo)
+
       }).catch((error) => {
 
         alert("There was an error returning your data")
         console.log(error)
       })
-
-
-      //
-
-      // C.id = id
-      //  console.log(response.data.results)
-
     })
-
-
-
     setGameSearch(userInput);
-
   }
 
+  // because a value in the second response comes with html elements I had to use dangerouslySetInnerHTML attribute. Just to keep it safe i installed a sanitizer and will run my code through this. Although its not needed because I am not connecting this to a user input, I still will show that this is what could be done.
+  const myHTMLData = moreGameInfo.description;
+  const myPurifiedData = DOMPurify.sanitize(myHTMLData);
 
-
+  // form section follows
   return (
-
-
     <div >
-
       <section className='formSection'>
-        <Heading />
+        <Heading title="Game Finder" />
+
         <div className='userForm'>
           <h1>Choose your game!</h1>
-
+          {/* on submit  */}
           {<form onSubmit={userSubmit}>
             <label htmlFor="search">Search for your favourite game: </label> <br />
-            <label htmlFor="subHeading">Get details back!</label> <br />
+            <label className='scrollDown' htmlFor="subHeading">Once submitted scroll down to Get details back!</label> <br />
             <input type="text" className='search' placeholder='Game name' onChange={takeInput} value={userInput} /> <br />
-            <button   >Search</button>
+            <button >Search</button>
           </form>}
         </div>
       </section>
 
-      <section>
-        <div>
-
-        </div>
-      </section>
-
-      {/* {moreGameInfo.map((gameDetails) => {
-        return (
-          <div className='gameDiv'>
-            <h2>{gameDetails.name}</h2>
-            <p>{gameDetails.description}</p>
-          </div>
-        )
-      })} */}
-
-
+      {/* map through response to get what i need the following is returning the api data on the screen */}
       {game.map((moreGameDetails) => {
         return (
 
@@ -168,55 +103,31 @@ function App() {
               <div className='gameDivInfo' >
                 <h2>{moreGameInfo.name}</h2>
                 <ol>
-                  {/* <li>{moreGameDetails.publishers[0].name}</li> */}
                   <li><b>MetaCritic Rating:</b>  {moreGameDetails.metacritic} </li>
                   <li><b> Genre of game:</b> {moreGameDetails.genres[0].name}</li>
                   <li><b> MetaCritic Website:</b> <a href={moreGameInfo.metacritic_url}>{moreGameInfo.metacritic_url}</a>   </li>
                   <li> <b>Website:</b> <a href={moreGameInfo.website}> {moreGameInfo.website} </a></li>
                 </ol>
 
-                <p dangerouslySetInnerHTML={{ __html: moreGameInfo.description }}></p>
+                {/* this is where i used the purifier for this attribute and it is passed here */}
+                <p dangerouslySetInnerHTML={{ __html: myPurifiedData }}></p>
+
+                <p>{moreGameInfo.description_raw}</p>
                 <p>{moreGameDetails.description_raw}</p>
                 <div className='pictureGallery'>
-                  {moreGameDetails.short_screenshots.map((pictures) => {
-                    <img className='screenShot' src={pictures.image} alt="" />
+                  {/* another .map() to map through and return all available  photos */}
+                  {moreGameDetails.short_screenshots.map((screenShot, index) => {
+                    return (
+                      <img className='screenShot' src={screenShot.image} key={index} alt="" />
+                    )
                   })}
-                  <img className='screenShot' src={moreGameDetails.short_screenshots[0].image} alt="" />
-                  <img className='screenShot' src={moreGameDetails.short_screenshots[1].image} alt="" />
-                  <img className='screenShot' src={moreGameDetails.short_screenshots[2].image} alt="" />
-                  <img className='screenShot' src={moreGameDetails.short_screenshots[3].image} alt="" />
-                  <img className='screenShot' src={moreGameDetails.short_screenshots[4].image} alt="" />
-                  <img className='screenShot' src={moreGameDetails.short_screenshots[5].image} alt="" />
                 </div>
-
               </div>
               <Footing />
             </div>
           </section>
         )
       })}
-
-      {/* {setGame.map((gameInfo) => {
-        return (
-          <div className='gameDiv'>
-            <h2>{gameInfo.name}</h2>
-            <p className='metaScore' >{gameInfo.metacritic}</p>
-            <div className='pictureGallery'>
-
-              <img className='screenShot' src={gameInfo.short_screenshots[0].image} alt="" />
-              <img className='screenShot' src={gameInfo.short_screenshots[1].image} alt="" />
-              <img className='screenShot' src={gameInfo.short_screenshots[2].image} alt="" />
-              <img className='screenShot' src={gameInfo.short_screenshots[3].image} alt="" />
-            </div>
-
-          </div>
-
-        )
-
-
-      })} */}
-
-
 
     </div>
   );

@@ -6,7 +6,8 @@ const heading = (props) => {
     return (
 
         <header>
-            Game Finder <FontAwesomeIcon icon={faRobot}></FontAwesomeIcon>
+            {props.title} <FontAwesomeIcon icon={faRobot} aria-hidden="true"></FontAwesomeIcon>
+
         </header>
     )
 

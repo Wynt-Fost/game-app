@@ -64,6 +64,8 @@ img{
   max-width: 1200px;
 }
 
+/* ============================================================================== header =============================================================================== */
+
 header{
   background-color: black ;
   color: white;
@@ -72,7 +74,7 @@ header{
   padding-top: 10px;
 }
 
-
+/* ============================================================================== form =============================================================================== */
 .formSection{
   height: 100vh;
   background-image: url(../src/assets/backGroundOne.jpg);
@@ -82,7 +84,15 @@ header{
   color: aliceblue;
 }
 
+
+
+.scrollDown{
+  color: #3cb0fd;
+}
+
 .userForm{
+  animation: 1s ease-out 0s 1 slideInFromLeft;
+  
   position: relative;
   font-family: 'Bebas Neue', cursive;
   padding-top: 1px;
@@ -103,7 +113,7 @@ input{
   margin-top: 10px;
   margin-bottom: 10px;
   font-family: 'Bebas Neue', cursive;
-  padding-left: 20%;
+  padding-left: 10px;
 }
 
 button {
@@ -129,6 +139,8 @@ button:hover {
   transition: background-color 2s ease-out;
   text-decoration: none;
 }
+
+/* ============================================================================== game div returned after api call =============================================================================== */
 
 .gameDiv{
   height: 0 auto;
@@ -160,7 +172,6 @@ p{
 }
 
 
-
 .pictureGallery{
   display: flex;
   flex-wrap: wrap;
@@ -184,4 +195,64 @@ footer{
   background-color: black;
   color: white;
   font-family: 'Bebas Neue', cursive;
+}
+
+/* ============================================================================== media  481px=============================================================================== */
+
+@media(max-width: 481px){
+ 
+  h1{
+    font-size: 2rem;
+  }
+  
+  .userForm{
+    height: 250px;
+    width: 60%;
+    left: 20%;
+  }
+
+  input{
+    width: 70%;
+  }
+
+  button{
+    font-size: 1rem;
+  }
+
+  .gameDiv{
+   background-position: center;
+  background-size: cover;
+  }
+
+  li{
+    font-size: 1.2rem;
+  }
+
+  p{
+    font-size: 1.2rem;
+  }
+
+  
+
+}
+/* ============================================================================== media 320px =============================================================================== */
+@media(max-width: 320px){
+
+
+  .userForm{
+    width: 100%;
+    left: 0px;
+  }
+
+  .pictureGallery{
+    flex-direction: column;
+  }
+
+  .screenShot{
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+    right: 0;
+      margin-left: 8px;
+  }
 }
