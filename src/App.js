@@ -79,17 +79,19 @@ function App() {
   return (
     <div >
       <section className='formSection'>
-        <Heading title="Game Finder" />
+        <div className='wrapper'>
+          <Heading title="Game Finder" />
 
-        <div className='userForm'>
-          <h1>Choose your game!</h1>
-          {/* on submit  */}
-          {<form onSubmit={userSubmit}>
-            <label htmlFor="search">Search for your favourite game: </label> <br />
-            <label className='scrollDown' htmlFor="subHeading">Once submitted scroll down to Get details back!</label> <br />
-            <input type="text" className='search' placeholder='Game name' onChange={takeInput} value={userInput} /> <br />
-            <button >Search</button>
-          </form>}
+          <div className='userForm'>
+            <h1>Choose your game!</h1>
+            {/* on submit  */}
+            {<form onSubmit={userSubmit}>
+              <label htmlFor="search">Search for your favourite game: </label> <br />
+              <label className='scrollDown' htmlFor="subHeading">Once submitted scroll down to Get details back!</label> <br />
+              <input type="text" className='search' placeholder='Game name' onChange={takeInput} value={userInput} /> <br />
+              <button >Search</button>
+            </form>}
+          </div>
         </div>
       </section>
 
