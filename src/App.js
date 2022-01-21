@@ -17,8 +17,6 @@ function App() {
   const [userInput, setUserInput] = useState('');
   const [gameSearch, setGameSearch] = useState('');
 
-  const [arrow, setArrow] = useState(false);
-
   // fires api call on user input
   const takeInput = (event) => {
     setUserInput(event.target.value);
@@ -46,7 +44,8 @@ function App() {
       const firstApiCall = response.data.results
       setGame(firstApiCall)
       const gameId = response.data.results[0].id
-      // second call takes the gameId variable at the end of the url and returns the next call with more info from the "get details of the game" url
+      // second call takes the gameId variable at the end of the url and returns the next call with more info from the "get details of the game" url 
+      // It doesnt take the id as a parameter will have to physically attach it to the end of the url
       axios({
 
         id: gameId,
@@ -59,13 +58,10 @@ function App() {
       }).then((response) => {
 
         const secondApiCall = response.data;
-        console.log(secondApiCall)
         setMoreGameInfo(secondApiCall)
 
       }).catch((error) => {
-
         alert("There was an error returning your data")
-        console.log(error)
       })
     })
     setGameSearch(userInput);
